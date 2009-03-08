@@ -3,7 +3,7 @@
 	<information>
 		<title>NotiFyX</title>
 		<vendor>Dmitry Shkil</vendor>
-		<homepage href="http://shkil.com.ua"/>
+		<homepage href="http://notifyx.googlecode.com"/>
 		<description>NotiFyX - Gmail Notifier. Not affiliated with Google</description>
 		<shortcut online="true">
 			<desktop/>
@@ -21,6 +21,8 @@
 	<resources>
 		<j2se version="1.5+" href="http://java.sun.com/products/autodl/j2se"/>
 		<property name="jnlp.packEnabled" value="true"/>
+		<package name="org.jivesoftware.smackx.debugger.*" part="smackx-debug"/>
+		<!--jar href="smackx-debug-3.1.0.jar" download="lazy" part="smackx-debug"/-->
 		$dependencies
 		<property name="smack.debug" value="false"/>
 	</resources>
