@@ -134,8 +134,8 @@
 
 	<repositories>
 		<repository>
-			<id>shkil-repository</id>
-			<url>http://dev.shkil.com.ua/repository/m2</url>
+			<id>notifyx-repository</id>
+			<url>http://notifyx.googlecode.com/svn/repository/m2</url>
 		</repository>
 	</repositories>
 
