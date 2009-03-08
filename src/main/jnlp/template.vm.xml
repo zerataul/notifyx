@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.5" codebase="http://dev.shkil.com.ua/notifyx/" href="notifyx.jnlp">
+	<information>
+		<title>NotiFyX</title>
+		<vendor>Dmitry Shkil</vendor>
+		<homepage href="http://shkil.com.ua"/>
+		<description>NotiFyX - Gmail Notifier. Not affiliated with Google</description>
+		<shortcut online="true">
+			<desktop/>
+			<menu submenu="NotiFyX"/>
+		</shortcut>
+		<icon href="notifyx16x16.png" height="16" width="16" kind="default"/>
+		<icon href="notifyx24x24.png" height="24" width="24" kind="default"/>
+		<icon href="notifyx32x32.png" height="32" width="32" kind="default"/>
+		<icon href="notifyx64x64.png" height="64" width="64" kind="default"/>
+	</information>
+	<update check="background" policy="always"/>
+	<security>
+		<all-permissions/>
+	</security>
+	<resources>
+		<j2se version="1.5+" href="http://java.sun.com/products/autodl/j2se"/>
+		<property name="jnlp.packEnabled" value="true"/>
+		$dependencies
+		<property name="smack.debug" value="false"/>
+	</resources>
+	<application-desc main-class="$mainClass"/>
+</jnlp>
