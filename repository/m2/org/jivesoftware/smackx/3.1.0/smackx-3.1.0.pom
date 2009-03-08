@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jivesoftware</groupId>
+  <artifactId>smackx</artifactId>
+  <packaging>jar</packaging>
+  <version>3.1.0</version>
+  <name>Smack</name>
+  <description>XMPP library for Java</description>
+  <url>http://www.igniterealtime.org/projects/smack/index.jsp</url>
+
+  <build>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <file>smackx-3.1.0.jar</file>
+		  <repositoryId>shkil-repository</repositoryId>
+		  <url>scp://dev.shkil.com.ua/repository/m2</url>
+		  
+		  <artifactId>smackx</artifactId>
+		  <groupId>org.jivesoftware</groupId>
+		  <version>3.1.0</version>
+		  <pomFile>pom.xml</pomFile >
+        </configuration>
+      </plugin>
+    </plugins>
+
+  </build>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.jivesoftware</groupId>
+      <artifactId>smack</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+  </dependencies>
+
+  <distributionManagement>
+    <repository>
+      <id>shkil-repository</id>
+      <name>Shkil Repository</name>
+      <url>scp://repository.shkil.com.ua/maven2</url>
+    </repository>
+  </distributionManagement>
+
+</project>
