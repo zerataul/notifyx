@@ -69,7 +69,6 @@
 						<resources>${project.basedir}/src/main/jnlp/resources</resources>
 						<mainClass>ua.com.shkil.notifyx.Application</mainClass>
 					</jnlp>
-
 					<!-- SIGNING -->
 					<sign>
 						<keystore>${project.basedir}/notifyx.keystore</keystore>
@@ -80,6 +79,7 @@
 						<verify>true</verify>
 					</sign>
 					<pack200>true</pack200>
+					<gzip>true</gzip>
 					<verbose>false</verbose>
 				</configuration>
 			</plugin>
@@ -101,6 +101,7 @@
 			<groupId>org.jivesoftware</groupId>
 			<artifactId>smackx-debug</artifactId>
 			<version>3.1.0</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
