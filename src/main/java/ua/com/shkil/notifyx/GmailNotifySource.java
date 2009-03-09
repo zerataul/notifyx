@@ -132,6 +132,9 @@ public class GmailNotifySource {
 
 	public void login(String username, char[] password) throws XMPPException {
 		try {
+			if (username.indexOf("@") < 0) {
+				username = username.concat("@gmail.com");
+			}
 			connection.login(username, new String(password), "NotiFyX");
 			fireActivated();
 		}
