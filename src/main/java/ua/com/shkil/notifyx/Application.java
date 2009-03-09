@@ -21,8 +21,6 @@ import org.jivesoftware.smack.XMPPException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.swtdesigner.SwingResourceManager;
-
 import ua.com.shkil.notifyx.packet.Mailbox.MailThreadInfo;
 import ua.com.shkil.notifyx.ui.ConversationNotification;
 import ua.com.shkil.notifyx.ui.TrayIcon;
@@ -30,6 +28,8 @@ import ua.com.shkil.notifyx.ui.TrayMenu;
 import ua.com.shkil.ui.notification.NotificationFrame;
 import ua.com.shkil.ui.notification.NotificationModel;
 import ua.com.shkil.ui.notification.NotificationPanel;
+
+import com.swtdesigner.SwingResourceManager;
 
 public class Application extends SingleFrameApplication {
 
@@ -58,6 +58,10 @@ public class Application extends SingleFrameApplication {
 				log.warn("Action {} not found", command);
 			}
 			else {
+				Object selectedValue = action.getValue(javax.swing.Action.SELECTED_KEY);
+				if (selectedValue instanceof Boolean) { //TODO
+					action.putValue(javax.swing.Action.SELECTED_KEY, !((Boolean) selectedValue));
+				}
 				action.actionPerformed(e);
 			}
 		}
@@ -69,13 +73,12 @@ public class Application extends SingleFrameApplication {
 
 	@Override
 	protected void startup() {
-		final TrayMenu trayMenu = new TrayMenu(actionPerformer);
 		trayIcon = new TrayIcon("gmail-kuro");
 		trayIcon.addState("empty", "gmail-orangish");
 		trayIcon.addState("hasmail", "gmail-bleu");
 		trayIcon.addState("important", "gmail-classic");
 		trayIcon.setToolTip("NotiFyX");
-		trayIcon.setJPopupMenu(trayMenu);
+		trayIcon.setJPopupMenu(new TrayMenu(getContext().getActionMap()));
 		trayIcon.addActionListener(actionPerformer);
 		trayIcon.register();
 		gnotifyService.addListener(new NotifySourceListener() {
@@ -158,19 +161,26 @@ public class Application extends SingleFrameApplication {
 		}
 	}
 
-	@Action
+	public boolean isNotificationInactive() {
+		return !notificationModel.isActive();
+	}
+
+	public void setNotificationInactive(boolean inactive) {
+		notificationModel.setActive(!inactive);
+	}
+
+	@Action(selectedProperty = "notificationInactive")
 	public void toggleNotificationActive() {
-		notificationModel.setActive(!notificationModel.isActive());
 	}
-	
+
 	@Action
-	public void bringNotificationFrameOn() {
-		notificationFrame.bringOn();
+	public void bringNotificationFrameShort() {
+		notificationFrame.bringShort();
 	}
-	
+
 	@Action
-	public void bringNotificationFrameOff() {
-//		notificationFrame.bringOff();
+	public void bringNotificationFrameMedium() {
+		notificationFrame.bringMedium();
 	}
 
 }

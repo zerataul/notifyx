@@ -250,7 +250,7 @@ public class NotificationFrame extends JWindow {
 
 		contentPane.add(notifPane);
 		contentPane.add(bottomBar);
-		
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -374,17 +374,25 @@ public class NotificationFrame extends JWindow {
 		setSize(width, getHeight());
 	}
 
-	public synchronized void bringOn() {
-		adjustHideAfter(1000);
+	public void bring(int duration) {
+		adjustHideAfter(duration);
 		updateVisibilityState();
+	}	
+
+	public void bringShort() {
+		bring(1000);
 	}
 
-	protected void adjustHideAfter(int timeout) {
+	public void bringMedium() {
+		bring(3000);
+	}
+
+	protected synchronized void adjustHideAfter(int timeout) {
 		hideAfter = Math.max(hideAfter, new Date().getTime() + timeout);
 		hideTimer.start();
 	}
 
-	protected void freeze() {
+	protected synchronized void freeze() {
 		hideAfter = 0;
 		hideTimer.stop();
 	}

@@ -109,6 +109,7 @@ public class TrayIcon extends java.awt.TrayIcon {
 				//				else
 				switch (e.getButton()) {
 				case MouseEvent.BUTTON1: {
+					fireActionPerformed(0, Actions.BRING_NOTIFICATION_FRAME_MEDIUM.command());
 					break;
 				}
 				case MouseEvent.BUTTON2: {
@@ -121,7 +122,7 @@ public class TrayIcon extends java.awt.TrayIcon {
 		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				fireActionPerformed(0, Actions.BRING_NOTIFICATION_FRAME_ON.command());
+				fireActionPerformed(0, Actions.BRING_NOTIFICATION_FRAME_SHORT.command());
 			}
 		});
 		init();
@@ -183,7 +184,6 @@ public class TrayIcon extends java.awt.TrayIcon {
 			public void mousePressed(MouseEvent e) {
 				showJPopupMenu(e);
 			}
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				showJPopupMenu(e);
