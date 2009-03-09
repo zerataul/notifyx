@@ -50,11 +50,15 @@ public class ConversationNotification extends BaseNotification {
 		Iterator<? extends ISender> it = senders.iterator();
 		while (it.hasNext()) {
 			ISender sender = it.next();
+			String senderName = sender.getName();
+			if (senderName == null) {
+				senderName = sender.getAddress();
+			}
 			if (sender.isUnread()) {
-				sb.append("<b>" + sender.getName() + "</b>");
+				sb.append("<b>" + senderName + "</b>");
 			}
 			else {
-				sb.append(sender.getName());
+				sb.append(senderName);
 			}
 			if (it.hasNext()) {
 				sb.append(", ");
