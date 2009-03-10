@@ -30,6 +30,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.AbstractLayerUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -148,14 +150,6 @@ public class NotificationFrame extends JWindow {
 						NotificationFrame.super.setLocation((x > 0 ? x : 0), (y > 0 ? y : 0));
 					}
 				}
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					NotificationFrame.this.onMouseEntered(e);
-				}
-				@Override
-				public void mouseExited(MouseEvent e) {
-					NotificationFrame.this.onMouseExited(e);
-				}
 			};
 			addMouseListener(mouseAdapter);
 			addMouseMotionListener(mouseAdapter);
@@ -220,10 +214,23 @@ public class NotificationFrame extends JWindow {
 	}
 
 	private void initComponents() {
-		final JPanel contentPane = new JPanel();
+		final JPanel contentPane = new JPanel();		
+		AbstractLayerUI<JComponent> layerUI = new AbstractLayerUI<JComponent>() {
+			@Override
+			protected void processMouseEvent(MouseEvent e, JXLayer<JComponent> layer) {
+				switch (e.getID()) {
+					case MouseEvent.MOUSE_ENTERED:
+						onMouseEntered(e);
+						break;
+					case MouseEvent.MOUSE_EXITED:
+						onMouseExited(e);
+						break;
+				}
+			}
+		};
+		JXLayer<JComponent> layer = new JXLayer<JComponent>(contentPane, layerUI);
 		contentPane.setBorder(frameBorder);
-		setContentPane(contentPane);
-		setLayout(new TinyGridLayout());
+		contentPane.setLayout(new TinyGridLayout());
 
 		contentPane.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(final MouseWheelEvent e) {
@@ -237,30 +244,10 @@ public class NotificationFrame extends JWindow {
 			}
 		});
 
-		contentPane.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				NotificationFrame.this.onMouseEntered(e);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				NotificationFrame.this.onMouseExited(e);
-			}
-		});
-
 		contentPane.add(notifPane);
 		contentPane.add(bottomBar);
 
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				onMouseEntered(e);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				onMouseExited(e);
-			}
-		});
+		add(layer);
 
 		getRootPane().registerKeyboardAction(new ActionListener() {
 			@Override
@@ -277,11 +264,11 @@ public class NotificationFrame extends JWindow {
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
-	private void onMouseEntered(MouseEvent e) {
+	protected void onMouseEntered(MouseEvent e) {
 		freeze();
 	}
 
-	private void onMouseExited(MouseEvent e) {
+	protected void onMouseExited(MouseEvent e) {
 		adjustHideAfter(1000);
 	}
 
