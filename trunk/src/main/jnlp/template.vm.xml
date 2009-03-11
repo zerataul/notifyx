@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.5" codebase="http://dev.shkil.com.ua/notifyx/" href="notifyx.jnlp">
+<jnlp spec="1.5" codebase="http://notifyx.googlecode.com/files/" href="notifyx.jnlp">
 	<information>
 		<title>NotiFyX</title>
 		<vendor>Dmitry Shkil</vendor>
 		<homepage href="http://notifyx.googlecode.com"/>
 		<description>NotiFyX - Gmail Notifier. Not affiliated with Google</description>
-		<shortcut online="false">
+		<shortcut online="true">
 			<desktop/>
 			<menu submenu="NotiFyX"/>
 		</shortcut>

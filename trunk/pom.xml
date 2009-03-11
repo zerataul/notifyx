@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ua.com.shkil.notifyx</groupId>
 	<artifactId>notifyx</artifactId>
@@ -8,7 +7,6 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>notifyx</name>
 	<url>http://www.shkil.com.ua</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -60,15 +58,26 @@
 			</plugin>
 			<plugin>
 				<artifactId>webstart-maven-plugin</artifactId>
-				<groupId>org.codehaus.mojo</groupId>
-				<version>1.0-alpha-1</version>
+				<groupId>org.codehaus.mojo.webstart</groupId>
+				<version>1.0-alpha-2</version>
+				<!--
+					Usage: mvn clean package org.codehaus.mojo.webstart:webstart-maven-plugin:jnlp
+				-->
+				<executions>
+					<execution>
+						<goals>
+							<goal>jnlp-inline</goal> <!-- use jnlp, jnlp-inline or jnlp-single as appropriate -->
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<jnlp>
 						<inputTemplate>src/main/jnlp/template.vm.xml</inputTemplate>
 						<outputFile>${pom.artifactId}.jnlp</outputFile>
-						<resources>${project.basedir}/src/main/jnlp/resources</resources>
 						<mainClass>ua.com.shkil.notifyx.Application</mainClass>
 					</jnlp>
+					<resourcesDirectory>${project.basedir}/src/main/jnlp/resources</resourcesDirectory>
+					<unsignAlreadySignedJars>true</unsignAlreadySignedJars>
 					<!-- SIGNING -->
 					<sign>
 						<keystore>${project.basedir}/notifyx.keystore</keystore>
@@ -85,7 +94,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>ua.com.shkil</groupId>
@@ -135,12 +143,10 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<repositories>
 		<repository>
 			<id>notifyx-repository</id>
 			<url>http://notifyx.googlecode.com/svn/repository/m2</url>
 		</repository>
 	</repositories>
-
 </project>
