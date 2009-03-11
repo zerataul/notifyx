@@ -247,7 +247,7 @@ public class NotificationFrame extends JWindow {
 		contentPane.add(notifPane);
 		contentPane.add(bottomBar);
 
-		add(layer);
+		setContentPane(layer);
 
 		getRootPane().registerKeyboardAction(new ActionListener() {
 			@Override
@@ -278,7 +278,7 @@ public class NotificationFrame extends JWindow {
 			int h = d.height;
 			notifPane.setSize(d);
 			Insets ins = getContentPane().getInsets();
-			setBounds(pseudoLocation.x, pseudoLocation.y, getWidth(), ins.top + h + bottomBar.getHeight() + ins.bottom);
+			setBounds(pseudoLocation.x, pseudoLocation.y, getWidth(), ins.top + h + bottomBar.getHeight() + ins.bottom + 2); //FIXME
 			bottomBar.btnPrev.setEnabled(notifPane.canBackward());
 			bottomBar.btnNext.setEnabled(notifPane.canForward());
 		}
