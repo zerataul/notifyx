@@ -215,6 +215,22 @@ public class NotificationFrame extends JWindow {
 
 	private void initComponents() {
 		final JPanel contentPane = new JPanel();		
+
+		contentPane.setLayout(new TinyGridLayout());
+		contentPane.add(notifPane);
+		contentPane.add(bottomBar);
+		contentPane.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(final MouseWheelEvent e) {
+				int rotation = e.getWheelRotation();
+				if (rotation < 0) {
+					notifPane.goBackward();
+				}
+				else if (rotation > 0) {
+					notifPane.goForward();
+				}
+			}
+		});
+
 		AbstractLayerUI<JComponent> layerUI = new AbstractLayerUI<JComponent>() {
 			@Override
 			protected void processMouseEvent(MouseEvent e, JXLayer<JComponent> layer) {
@@ -229,24 +245,7 @@ public class NotificationFrame extends JWindow {
 			}
 		};
 		JXLayer<JComponent> layer = new JXLayer<JComponent>(contentPane, layerUI);
-		contentPane.setBorder(frameBorder);
-		contentPane.setLayout(new TinyGridLayout());
-
-		contentPane.addMouseWheelListener(new MouseWheelListener() {
-			public void mouseWheelMoved(final MouseWheelEvent e) {
-				int rotation = e.getWheelRotation();
-				if (rotation < 0) {
-					notifPane.goBackward();
-				}
-				else if (rotation > 0) {
-					notifPane.goForward();
-				}
-			}
-		});
-
-		contentPane.add(notifPane);
-		contentPane.add(bottomBar);
-
+		layer.setBorder(frameBorder);
 		setContentPane(layer);
 
 		getRootPane().registerKeyboardAction(new ActionListener() {
@@ -278,7 +277,7 @@ public class NotificationFrame extends JWindow {
 			int h = d.height;
 			notifPane.setSize(d);
 			Insets ins = getContentPane().getInsets();
-			setBounds(pseudoLocation.x, pseudoLocation.y, getWidth(), ins.top + h + bottomBar.getHeight() + ins.bottom + 2); //FIXME
+			setBounds(pseudoLocation.x, pseudoLocation.y, getWidth(), ins.top + h + bottomBar.getHeight() + ins.bottom);
 			bottomBar.btnPrev.setEnabled(notifPane.canBackward());
 			bottomBar.btnNext.setEnabled(notifPane.canForward());
 		}
