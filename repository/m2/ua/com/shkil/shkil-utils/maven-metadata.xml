@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><metadata>
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
   <groupId>ua.com.shkil</groupId>
   <artifactId>shkil-utils</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -6,6 +7,6 @@
     <versions>
       <version>0.0.1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20090308162055</lastUpdated>
+    <lastUpdated>20090312111357</lastUpdated>
   </versioning>
 </metadata>
