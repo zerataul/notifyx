@@ -84,6 +84,7 @@ public class Application extends SingleFrameApplication {
 		gnotifyService.addListener(new NotifySourceListener() {
 			@Override
 			public void mailboxUpdated(int totalMatched, List<MailThreadInfo> threads, String url) {
+				notificationModel.removeAll();
 				if (totalMatched > 0) {
 					for (MailThreadInfo thread : threads) {
 						ConversationNotification notif = new ConversationNotification(
@@ -97,7 +98,6 @@ public class Application extends SingleFrameApplication {
 				}
 				else {
 					trayIcon.setState("empty");
-					notificationModel.removeAll();
 				}
 			}
 			@Override
