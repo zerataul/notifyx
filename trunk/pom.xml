@@ -78,7 +78,6 @@
 					</jnlp>
 					<resourcesDirectory>${project.basedir}/src/main/jnlp/resources</resourcesDirectory>
 					<unsignAlreadySignedJars>true</unsignAlreadySignedJars>
-					<!-- SIGNING -->
 					<sign>
 						<keystore>${project.basedir}/notifyx.keystore</keystore>
 						<keypass>0notifyx0</keypass>
