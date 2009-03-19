@@ -198,6 +198,10 @@ public class NotificationFrame extends JWindow {
 			public void notificationModelChanged(NotificationModel model) {
 				setAlwaysHidden(!model.isActive());
 			}
+			@Override
+			public void notificationAdded(Notification notif) {
+				updateVisibilityState();
+			}
 		});
 
 		notifPane.addNotificationPaneListener(new NotificationPaneListener() {
@@ -282,7 +286,7 @@ public class NotificationFrame extends JWindow {
 			bottomBar.btnNext.setEnabled(notifPane.canForward());
 		}
 		bottomBar.update();
-		updateVisibilityState();
+//		updateVisibilityState();
 	}
 
 	@Override
