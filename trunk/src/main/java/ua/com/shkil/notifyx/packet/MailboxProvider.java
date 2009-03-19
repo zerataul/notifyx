@@ -7,6 +7,8 @@ import java.util.List;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.provider.IQProvider;
 import org.jivesoftware.smack.util.PacketParserUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -14,6 +16,8 @@ import ua.com.shkil.notifyx.packet.Mailbox.MailThreadInfo;
 import ua.com.shkil.notifyx.packet.Mailbox.Sender;
 
 public class MailboxProvider implements IQProvider {
+	
+	private static final Logger log = LoggerFactory.getLogger(MailboxProvider.class); 
 
 	@Override
 	public IQ parseIQ(final XmlPullParser parser) throws Exception {
@@ -42,6 +46,7 @@ public class MailboxProvider implements IQProvider {
 
 	public MailThreadInfo parseMailThreadInfo(XmlPullParser parser) throws XmlPullParserException, IOException {
 		MailThreadInfo threadInfo = new MailThreadInfo();
+		threadInfo.setThreadId(parser.getAttributeValue("", "tid"));
 		int messagesCount = Integer.parseInt(parser.getAttributeValue("", "messages"));
 		threadInfo.setMessages(messagesCount);
 		for (;;) {
@@ -61,7 +66,7 @@ public class MailboxProvider implements IQProvider {
 					threadInfo.setSenders(parseSenders(parser));
 				}
 				else {
-					System.out.println("MailboxIQProvider.parseIQ() @ START_TAG ! unknown: " + name + " " + parser.getNamespace());
+					log.warn("@START_TAG ! unknown: {} {}", name, parser.getNamespace());
 				}
 			}
 			else if (eventType == XmlPullParser.END_TAG) {
@@ -69,7 +74,7 @@ public class MailboxProvider implements IQProvider {
 					break;
 				}
 				else {
-					System.out.println("MailboxIQProvider.parseIQ() @ END_TAG ! unknown: " + name + " " + parser.getNamespace());
+					log.warn("@END_TAG ! unknown: {} {}", name, parser.getNamespace());
 				}
 			}
 			else if (eventType == XmlPullParser.END_DOCUMENT) {

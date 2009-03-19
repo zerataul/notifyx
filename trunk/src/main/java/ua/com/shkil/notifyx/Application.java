@@ -4,10 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.prefs.Preferences;
 
 import javax.swing.UIManager;
+
+import net.jcip.annotations.GuardedBy;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
@@ -59,7 +67,7 @@ public class Application extends SingleFrameApplication {
 			}
 			else {
 				Object selectedValue = action.getValue(javax.swing.Action.SELECTED_KEY);
-				if (selectedValue instanceof Boolean) { //TODO
+				if (selectedValue instanceof Boolean) { //FIXME
 					action.putValue(javax.swing.Action.SELECTED_KEY, !((Boolean) selectedValue));
 				}
 				action.actionPerformed(e);
@@ -82,21 +90,46 @@ public class Application extends SingleFrameApplication {
 		trayIcon.addActionListener(actionPerformer);
 		trayIcon.register();
 		gnotifyService.addListener(new NotifySourceListener() {
+			@GuardedBy("self")
+			private Map<String,WeakReference<ConversationNotification>> notifsMap = new HashMap<String,WeakReference<ConversationNotification>>(); 
 			@Override
 			public void mailboxUpdated(int totalMatched, List<MailThreadInfo> threads, String url) {
-				notificationModel.removeAll();
 				if (totalMatched > 0) {
+					HashSet<String> newThreadIdSet = new HashSet<String>();
 					for (MailThreadInfo thread : threads) {
-						ConversationNotification notif = new ConversationNotification(
-								thread.getSubject(), thread.getSnippet(),
-								thread.getSenders(), thread.getMessages()
-						);
-						notificationModel.add(notif);
+						newThreadIdSet.add(thread.getThreadId());
+					}
+					synchronized (notifsMap) {
+						Iterator<Entry<String, WeakReference<ConversationNotification>>> it = notifsMap.entrySet().iterator();
+						while (it.hasNext()) {
+							Entry<String, WeakReference<ConversationNotification>> entry = it.next();
+							if (!newThreadIdSet.remove(entry.getKey())) {
+								ConversationNotification notif = entry.getValue().get();
+								it.remove();
+								if (notif != null) {
+									notificationModel.remove(notif);
+								}
+							}
+						}
+						for (MailThreadInfo thread : threads) {
+							if (newThreadIdSet.contains(thread.getThreadId())) {
+								ConversationNotification notif = new ConversationNotification(
+										thread.getSubject(), thread.getSnippet(),
+										thread.getSenders(), thread.getMessages()
+								);
+								notifsMap.put(thread.getThreadId(), new WeakReference<ConversationNotification>(notif));
+								notificationModel.add(notif);
+							}
+						}
 					}
 					trayIcon.setState("hasmail");
 					java.awt.Toolkit.getDefaultToolkit().beep();
 				}
 				else {
+					notificationModel.removeAll();
+					synchronized (notifsMap) {
+						notifsMap.clear();
+					}
 					trayIcon.setState("empty");
 				}
 			}

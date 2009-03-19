@@ -43,11 +43,18 @@ public class Mailbox extends IQ {
 	}
 
 	public static class MailThreadInfo {
+		private String threadId;
 		private String subject;
 		private String snippet;
 		private String labels;
 		private List<Sender> senders;
 		private int messages;
+		public String getThreadId() {
+			return threadId;
+		}
+		public void setThreadId(String threadId) {
+			this.threadId = threadId;
+		}
 		public String getSubject() {
 			return subject;
 		}
