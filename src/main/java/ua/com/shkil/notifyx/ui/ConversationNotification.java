@@ -16,7 +16,7 @@ import com.swtdesigner.SwingResourceManager;
 
 import ua.com.shkil.notifyx.Application;
 import ua.com.shkil.notifyx.ISender;
-import ua.com.shkil.ui.notification.BaseNotification;
+import ua.com.shkil.jxui.notification.BaseNotification;
 
 @SuppressWarnings("serial")
 public class ConversationNotification extends BaseNotification {
