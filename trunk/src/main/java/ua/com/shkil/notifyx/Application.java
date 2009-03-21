@@ -33,9 +33,9 @@ import ua.com.shkil.notifyx.packet.Mailbox.MailThreadInfo;
 import ua.com.shkil.notifyx.ui.ConversationNotification;
 import ua.com.shkil.notifyx.ui.TrayIcon;
 import ua.com.shkil.notifyx.ui.TrayMenu;
-import ua.com.shkil.ui.notification.NotificationFrame;
-import ua.com.shkil.ui.notification.NotificationModel;
-import ua.com.shkil.ui.notification.NotificationPanel;
+import ua.com.shkil.jxui.notification.NotificationFrame;
+import ua.com.shkil.jxui.notification.NotificationModel;
+import ua.com.shkil.jxui.notification.NotificationPanel;
 
 import com.swtdesigner.SwingResourceManager;
 
