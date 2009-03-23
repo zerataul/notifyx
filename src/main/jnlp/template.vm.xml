@@ -20,7 +20,7 @@
 		<all-permissions/>
 	</security>
 	<resources>
-		<j2se version="1.5+" href="http://java.sun.com/products/autodl/j2se"/>
+		<j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
 		<property name="jnlp.packEnabled" value="true"/>
 		<package name="org.jivesoftware.smackx.debugger.*" part="smackx-debug"/>
 		<!--jar href="smackx-debug-3.1.0.jar" download="lazy" part="smackx-debug"/-->
