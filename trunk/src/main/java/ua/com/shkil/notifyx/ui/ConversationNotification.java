@@ -34,7 +34,7 @@ public class ConversationNotification extends BaseNotification {
 	public ConversationNotification(String subject, String snippet, Collection<? extends ISender> senders, int messages) {
 		super(NO_TIMEOUT);
 		this.subject = subject;
-		this.snippet = snippet.replaceAll("\\s…$", "<nbsp/>…");
+		this.snippet = snippet.replaceAll("\\s\u2026$", "<nbsp/>\u2026");
 		this.messages = messages;
 		label = new JLabel() {
 			@Override
