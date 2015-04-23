@@ -1,0 +1,1 @@
+[Launch NotiFyX](http://notifyx.googlecode.com/files/notifyx.jnlp) via Java Web Start

@@ -1,0 +1,1 @@
+The NotiFyX is an Open Source application written in Java that alerts you when you have new Gmail messages. Like official Gmail Notifier it displays an icon in your system tray to let you know if you have unread Gmail messages, and shows you their subjects, senders and snippets, all without your having to open a web browser.
